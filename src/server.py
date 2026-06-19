@@ -4,13 +4,16 @@ import os
 from flask import Flask
 from pymongo import MongoClient
 
+import pkgutil
+import blueprints
+
 def register_blueprints(app: Flask) -> None:
 
     path: Sequence[str] = getattr(blueprints, "__path__")
     modules = pkgutil.iter_modules(path)
 
     for _, module_name, __ in modules:
-        module = __import__(f"src.blueprints.{module_name}", fromlist=[""])
+        module = __import__(f"blueprints.{module_name}", fromlist=[""])
         blueprint = module.create_blueprint()
         app.register_blueprint(blueprint)
 
@@ -39,7 +42,7 @@ def create_app() -> Flask:
     return app
 
 
- def main() -> None:
+def main() -> None:
     app = create_app()
     app.run(host='0.0.0.0', port=os.environ.get("FLASK_SERVER_PORT", 9090), debug=os.getenv("FLASK_DEBUG", False))
 
