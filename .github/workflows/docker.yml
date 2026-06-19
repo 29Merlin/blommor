@@ -1,0 +1,19 @@
+name: docker
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate compose file
+        run: docker compose -f compose.yaml config
+
+      - name: Build services
+        run: docker compose -f compose.yaml build

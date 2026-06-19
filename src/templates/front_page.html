@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header class="site-header">
+        <!-- Header content goes here -->
+        <!-- TODO: add header content -->
+    </header>
+
+    <main class="container">
+
+        <section class="search-section">
+            <!-- Search form -->
+            <form class="search-form" method="POST">
+                {{search_form.hidden_tag()}}
+                <div class="form-group">
+                    {{search_form.search(class="search-input", placeholder="Search...")}}
+                    {% if search_form.search.errors %}
+                        <div class="errors">
+                            {% for error in search_form.search.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {{search_form.submit(class="search-button")}}
+            </form>
+        </section>
+
+        <section class="cards-section">
+            <!-- example cards, TODO: add dynamic content -->>
+            <div class="card-list">
+
+                <div class="card">
+                    <h3>Card Title</h3>
+                    <p>Card description goes here.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Card Title</h3>
+                    <p>Card description goes here.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Card Title</h3>
+                    <p>Card description goes here.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

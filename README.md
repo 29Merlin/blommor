@@ -1,1 +1,2 @@
 # blommor
+Run with docker 
