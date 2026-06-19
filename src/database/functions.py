@@ -8,13 +8,23 @@ def add_flower_type(cur: cursor, name:str) -> None:
         (name,)
     )
 
+@db_cursor
+def add_flower(cur: cursor, name:str, type_id:int, primary_color:str, price:float) -> None:
+    cur.execute(
+        "INSERT INTO flowers (name, type, primary_color, price) VALUES (%s, %s, %s, %s)",
+        (name, type_id, primary_color, price)
+    )
 
 @db_cursor
 def add_flower(cur: cursor, name:str, type:str, primary_color:str, price:float) -> None:
     cur.execute(
-        "INSERT INTO flowers (name, type, primary_color, price) VALUES (%s, %s, %s, %s)",
-        (name, type, primary_color, price)
+        "SELECT id FROM flower_types WHERE name = %s",
+        (type,)
     )
+    type_id = cur.fetchone()
+    if not type_id:
+        raise ValueError("Flower type not found")
+    add_flower(cur, name, type_id[0],  primary_color, price)
 
 @db_cursor
 def get_all_flowers(cur: cursor) -> list[dict]:
